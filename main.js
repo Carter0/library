@@ -14,6 +14,10 @@ function Book(title, author, pages, hasRead) {
     this.info = function () {
         return `${this.title} by ${this.author} contains ${this.pages}`;
     }
+
+    this.toggleHasRead = function () {
+        this.hasRead = !this.hasRead;
+    }
 }
 
 
@@ -59,8 +63,24 @@ function displayBooks(library) {
             }
         });
 
+        const toggleHasReadButton = document.createElement('button');
+        toggleHasReadButton.textContent = "Have you read the book?";
+
+        toggleHasReadButton.addEventListener("click", (event) => {
+            const bookElement = document.querySelector(`[data-book-id="${bookDiv.dataset.bookId}"]`);
+            if (bookElement) {
+                const bookIndex = bookElement.dataset.bookId;
+                const book = library[bookIndex];
+                book.toggleHasRead();
+
+
+                const hasReadElement = bookDiv.querySelector('.hasRead');
+                hasReadElement.textContent = `Has been read: ${book.hasRead.toString()}`;
+            }
+        });
+
         container.append(bookDiv);
-        bookDiv.append(title, author, pages, hasRead, deleteBookButton);
+        bookDiv.append(title, author, pages, hasRead, deleteBookButton, toggleHasReadButton);
     });
 }
 
@@ -93,9 +113,6 @@ addBookToLibrary('Harry Potter and the Sorcerer\'s Stone', 'J.K. Rowling', 309, 
 addBookToLibrary('The Lord of the Rings', 'J.R.R. Tolkien', 1178, false);
 addBookToLibrary('Dune', 'Frank Herbert', 682, true);
 addBookToLibrary('The Hunger Games', 'Suzanne Collins', 374, true);
-
-
-console.table(library);
 
 displayBooks(library);
 
