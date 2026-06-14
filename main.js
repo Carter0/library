@@ -52,6 +52,24 @@ function displayBooks(library) {
     });
 }
 
+// Listen for the submit button and make a new book
+document.getElementById('bookForm').addEventListener('submit', function (event) {
+    // Prevent the button from trying to send anything to the server.
+    event.preventDefault();
+
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const hasRead = document.getElementById('hasRead').checked;
+
+    addBookToLibrary(title, author, pages, hasRead);
+    displayBooks(library);
+
+    // Clears the form fields
+    // `this` is the form element
+    this.reset();
+});
+
 // Add 10 dummy books
 addBookToLibrary('The Great Gatsby', 'F. Scott Fitzgerald', 180, true);
 addBookToLibrary('1984', 'George Orwell', 328, true);
