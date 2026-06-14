@@ -29,13 +29,26 @@ function displayBooks(library) {
 
     library.forEach(book => {
         const bookDiv = document.createElement('div');
-        bookDiv.classList.add('bookCard');
+        bookDiv.classList.add('book');
 
-        const textNode1 = document.createTextNode(book.title);
-        const textNode2 = document.createTextNode(book.author);
+        const title = document.createElement('p');
+        title.textContent = book.title;
+        title.classList.add('title');
+
+        const author = document.createElement('p');
+        author.textContent = `By ${book.author}`;
+        author.classList.add('author');
+
+        const pages = document.createElement('p');
+        pages.textContent = `Total pages: ${book.pages.toString()}`;
+        pages.classList.add('pages');
+
+        const hasRead = document.createElement('p');
+        hasRead.textContent = `Has been read: ${book.hasRead.toString()}`;
+        hasRead.classList.add('hasRead');
 
         container.append(bookDiv);
-        bookDiv.append(textNode1, textNode2);
+        bookDiv.append(title, author, pages, hasRead);
     });
 }
 
