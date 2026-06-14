@@ -29,6 +29,7 @@ function displayBooks(library) {
 
     library.forEach(book => {
         const bookDiv = document.createElement('div');
+        bookDiv.dataset.bookId = library.indexOf(book);
         bookDiv.classList.add('book');
 
         const title = document.createElement('p');
@@ -47,8 +48,19 @@ function displayBooks(library) {
         hasRead.textContent = `Has been read: ${book.hasRead.toString()}`;
         hasRead.classList.add('hasRead');
 
+        const deleteBookButton = document.createElement('button');
+        deleteBookButton.textContent = "Delete the book?";
+
+        // Remove the book on click using the dataset above
+        deleteBookButton.addEventListener("click", (event) => {
+            const bookElement = document.querySelector(`[data-book-id="${bookDiv.dataset.bookId}"]`);
+            if (bookElement) {
+                bookElement.remove();
+            }
+        });
+
         container.append(bookDiv);
-        bookDiv.append(title, author, pages, hasRead);
+        bookDiv.append(title, author, pages, hasRead, deleteBookButton);
     });
 }
 
